@@ -136,7 +136,7 @@ Furthermore, based on the extracted morphological features, a support vector mac
 
 ## Contributors
 
-请阅读**CONTRIBUTING.md** 查阅为该项目做出贡献的开发者。
+For contributors to this toolkit, please refer to the contributors list on the right side of the repository page.
 
 
 
