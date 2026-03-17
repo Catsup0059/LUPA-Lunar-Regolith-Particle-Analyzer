@@ -42,14 +42,24 @@
 - [Aknowledgements](#Aknowledgements)
 
 ## Overview
+Lunar regolith particle morphology strongly influences the mechanical and thermal properties of the lunar surface. Existing studies are still largely based on qualitative observations or rely on closed commercial software, which limits transparency, reproducibility, and large-scale statistical analysis.
 
-Lunar regolith particle morphology plays a critical role in determining the mechanical and thermal properties of the lunar surface. However, many existing studies still rely primarily on qualitative observations, such as visual inspection of particle images or 3D reconstructions. Even when quantitative analysis is performed, the workflow often depends on specialized commercial morphology-analysis software, which limits transparency, reproducibility, and large-scale statistical analysis of particle populations.
+LUPA is a computational toolkit for the batch analysis of CT-derived lunar regolith particles. It establishes a quantitative characterization framework that evaluates particles from two complementary aspects: morphology and surface texture.
 
-To address these limitations, we developed LUPA, a computational toolkit for the batch analysis of lunar regolith particles derived from CT scans. The core contribution of LUPA lies in a systematic quantitative characterization framework, which extracts particle descriptors from two complementary perspectives: morphology and surface texture. The workflow begins with preprocessing of STL models, including mesh repair to remove internal pore structures captured during CT scanning and filtering to downsample particle point clouds. Based on the processed data, LUPA computes a set of quantitative features that capture both global shape characteristics and local surface complexity.
+Preprocessing Module
+- Mesh repair to remove internal pore structures captured by CT scanning
+- Point cloud filtering and downsampling for efficient computation
+- Generation of clean particle geometry for analysis
 
-Built upon this characterization framework, LUPA further integrates a machine learning–based classification module, in which particles are categorized into four genetic types—glass, agglutinates, monominerals, and lithic fragments—using a support vector machine (SVM). Rather than being the primary focus, this classification module serves as a validation and application of the proposed morphological descriptors, demonstrating that particles of different origins occupy distinct and stable regions in the multidimensional feature space.
+Quantitative Analysis Module
+- Extraction of morphological descriptors (global shape features)
+- Extraction of texture descriptors (surface roughness and micro-structure)
+- Support for statistical analysis of large particle populations
 
-The combined analysis reveals that variations in particle type proportions are closely linked to regolith formation, space weathering processes, and maturity, while also exerting significant influence on macroscopic properties such as packing density, mechanical behavior, thermal conductivity, and optical characteristics. By integrating quantitative morphology analysis with data-driven classification, LUPA provides a transparent, reproducible, and extensible framework for both micro-scale characterization and macro-scale interpretation of lunar regolith.
+Classification Module
+- Based on the extracted morphological features, LUPA incorporates an SVM-based classifier to distinguish particle types.
+
+The toolkit not only offers efficient and reproducible large-scale analysis, but also provides a quantitative basis for interpreting regolith formation processes, space weathering, and maturity through particle-type proportions, thereby enhancing the understanding of how particle composition influences macroscopic physical properties.
   <p align="center">
     <img src="framework.png" alt="framework" width="510" height="500">
   </p>
