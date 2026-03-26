@@ -61,7 +61,7 @@ Classification Module
 
 The toolkit not only offers efficient and reproducible large-scale analysis, but also provides a quantitative basis for interpreting regolith formation processes, space weathering, and maturity through particle-type proportions, thereby enhancing the understanding of how particle composition influences macroscopic physical properties.
   <p align="center">
-    <img src="framework.png" alt="framework" width="510" height="500">
+    <img src="framework.jpg" alt="framework" width="510" height="500">
   </p>
 </a>
 
