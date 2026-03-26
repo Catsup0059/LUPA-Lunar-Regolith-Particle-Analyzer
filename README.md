@@ -12,7 +12,6 @@
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
 
 <!-- PROJECT LOGO -->
 <br />
@@ -161,17 +160,15 @@ The original source code and license of the package are preserved in this reposi
 
 <!-- links -->
 [your-project-path]:shaojintian/Best_README_template
-[contributors-shield]: https://img.shields.io/github/contributors/Catsup0059/LunarRegolithParticleAnalysis.svg?style=flat-square
-[contributors-url]: https://github.com/Catsup0059/LunarRegolithParticleAnalysis/graphs/contributors
+[contributors-shield]: https://img.shields.io/github/contributors/Catsup0059/LUPA-Lunar-Regolith-Particle-Analyzer.svg?style=flat-square
+[contributors-url]: https://github.com/Catsup0059/LUPA-Lunar-Regolith-Particle-Analyzer/graphs/contributors
 
-[forks-shield]: https://img.shields.io/github/forks/Catsup0059/LunarRegolithParticleAnalysis.svg?style=flat-square
-[forks-url]: https://github.com/Catsup0059/LunarRegolithParticleAnalysis/network/members
+[forks-shield]: https://img.shields.io/github/forks/Catsup0059/LUPA-Lunar-Regolith-Particle-Analyzer.svg?style=flat-square
+[forks-url]: https://github.com/Catsup0059/LUPA-Lunar-Regolith-Particle-Analyzer/forks
 
-[stars-shield]: https://img.shields.io/github/stars/Catsup0059/LunarRegolithParticleAnalysis.svg?style=flat-square
-[stars-url]: https://github.com/Catsup0059/LunarRegolithParticleAnalysis/stargazers
+[stars-shield]: https://img.shields.io/github/stars/Catsup0059/LUPA-Lunar-Regolith-Particle-Analyzer.svg?style=flat-square
+[stars-url]: https://github.com/Catsup0059/LUPA-Lunar-Regolith-Particle-Analyzer/stargazers
 
-[issues-shield]: https://img.shields.io/github/issues/Catsup0059/LunarRegolithParticleAnalysis.svg?style=flat-square
-[issues-url]: https://github.com/Catsup0059/LunarRegolithParticleAnalysis/issues
+[issues-shield]: https://img.shields.io/github/issues/Catsup0059/LUPA-Lunar-Regolith-Particle-Analyzer.svg?style=flat-square
+[issues-url]: https://github.com/Catsup0059/LUPA-Lunar-Regolith-Particle-Analyzer/issues
 
-[license-shield]: https://img.shields.io/github/license/Catsup0059/LunarRegolithParticleAnalysis.svg?style=flat-square
-[license-url]: https://github.com/Catsup0059/LunarRegolithParticleAnalysis/blob/HPC_hit/LICENSE.txt
