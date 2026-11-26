@@ -1,2 +1,9 @@
-contributing.md
-.DS_Store
+# Python bytecode and local environments
+__pycache__/
+*.py[cod]
+/.venv/
+/venv/
+
+# Generated analysis output
+/data/
+/picture/

@@ -1,0 +1,35 @@
+{
+  "data_type": "deterministic synthetic demonstration meshes; not measured lunar regolith",
+  "说明": "确定性合成测试网格，非真实月壤扫描数据，不用于形成科学结论。",
+  "coordinate_unit": "mm",
+  "surface_points": 240,
+  "center_mm": [
+    0.1,
+    0.08,
+    0.05
+  ],
+  "sphere_radius_mm": 0.03,
+  "ellipsoid_semiaxes_mm": [
+    0.036,
+    0.025,
+    0.02
+  ],
+  "sphere_internal_component": "independent tetrahedron, removed by largest-area component selection",
+  "meshes": [
+    {
+      "file": "demo_sphere.stl",
+      "vertices": 244,
+      "faces": 480
+    },
+    {
+      "file": "demo_ellipsoid.stl",
+      "vertices": 240,
+      "faces": 476
+    },
+    {
+      "file": "demo_rough_particle.stl",
+      "vertices": 240,
+      "faces": 476
+    }
+  ]
+}

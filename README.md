@@ -1,174 +1,213 @@
-
-
 # LUPA: Lunar Regolith Particle Analyzer
-
-**LUPA** is a computational toolkit designed for the **batch and quantitative analysis of lunar regolith particle morphology**. 
-
-**Coming soon:** the full codebase will be released after the paper is published.
-
-<!-- PROJECT SHIELDS -->
 
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
+[![Stars][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 
-<!-- PROJECT LOGO -->
-<br />
-
 <p align="center">
-  <a href="https://github.com/Catsup0059/LunarRegolithParticleAnalysis/tree/HPC_hit">
-    <img src="LUPA1.png" alt="Logo" width="300" height="300">
-  </a>
-
-  <h3 align="center">LUPA：Lunar Regolith Particle Analyzer </h3>
-  <p align="center">
-    <br />
-    <a href="https://github.com/shaojintian/Best_README_template"><strong>
+  <img src="LUPA1.png" alt="LUPA logo" width="300" height="300">
 </p>
 
+**LUPA** is a Python toolkit for batch analysis of lunar regolith particle morphology and surface texture. It reads particle STL meshes, extracts the main connected surface, simplifies the mesh, computes geometric descriptors, and exports results and figures. Version 1.0 provides a command-line interface and an English-language Windows desktop interface.
 
-
- 
 ## Contents
 
-- [Overview](#Overview)
-- [Installation](#Installation)
-- [Inplementations](#Inplementations)
-- [Results](#Results)
-- [Contributors](#Contributors)
-- [License](#License)
-- [Aknowledgements](#Aknowledgements)
+- [Features](#features)
+- [Related project](#related-project)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Input and configuration](#input-and-configuration)
+- [Results](#results)
+- [Project structure](#project-structure)
+- [Tests](#tests)
+- [Developers](#developers)
+- [License and acknowledgements](#license-and-acknowledgements)
 
-## Overview
-Lunar regolith particle morphology strongly influences the mechanical and thermal properties of the lunar surface. Existing studies are still largely based on qualitative observations or rely on closed commercial software, which limits transparency, reproducibility, and large-scale statistical analysis.
+## Features
 
-LUPA is a computational toolkit for the batch analysis of CT-derived lunar regolith particles. It establishes a quantitative characterization framework that evaluates particles from two complementary aspects: morphology and surface texture.
+- **Mesh preprocessing:** read ASCII and binary STL files, merge coincident vertices, remove identical face entries and zero-area faces, and retain the connected surface with the largest area.
+- **Mesh simplification:** use PyMeshLab quadric edge collapse with a specified target face-retention ratio.
+- **Morphology:** calculate equivalent-volume diameter, specific surface area, Wadell sphericity, PCA axis ratios, and radial-distance variance.
+- **Surface texture:** calculate vertex-to-surface roughness and estimate surface fractal dimension through voxelization and multiscale spherical dilation.
+- **Batch processing:** process particles with one or multiple worker processes; run preprocessing, analysis, and display together or as separate stages.
+- **Results:** export CSV and JSON tables, STL and NPZ meshes, and PNG mesh views and fractal-fit plots.
 
-Preprocessing Module
-- Mesh repair to remove internal pore structures captured by CT scanning
-- Point cloud filtering and downsampling for efficient computation
-- Generation of clean particle geometry for analysis
+The workflow is **STL input → connected-surface extraction → mesh simplification → descriptor calculation → tables and figures**. The runtime is entirely Python.
 
-Quantitative Analysis Module
-- Extraction of morphological descriptors (global shape features)
-- Extraction of texture descriptors (surface roughness and micro-structure)
-- Support for statistical analysis of large particle populations
+### Research framework
 
-Classification Module
-- Based on the extracted morphological features, LUPA incorporates an SVM-based classifier to distinguish particle types.
+The figure shows the research workflow from CT-based particle reconstruction to morphology and texture analysis, particle classification, and physical-property prediction. LUPA provides the mesh preprocessing and quantitative morphology and surface-texture analysis used within this workflow.
 
-The toolkit not only offers efficient and reproducible large-scale analysis, but also provides a quantitative basis for interpreting regolith formation processes, space weathering, and maturity through particle-type proportions, thereby enhancing the understanding of how particle composition influences macroscopic physical properties.
-  <p align="center">
-    <img src="framework.jpg" alt="framework" width="510" height="500">
-  </p>
-</a>
+<p align="center">
+  <img src="framework.jpg" alt="Research framework linking particle reconstruction, quantitative morphology and texture analysis, classification, and physical-property prediction" width="900">
+</p>
 
+## Related project
+
+**Lunar Regolith Atlas** presents lunar regolith particle results generated using the LUPA calculation package.
+
+- **Interactive website:** [Lunar Regolith Atlas](https://wanglingxin-hit.github.io/lunar-regolith-atlas/)
+- **Source code:** [WangLingxin-hit/lunar-regolith-atlas](https://github.com/WangLingxin-hit/lunar-regolith-atlas)
 
 ## Installation
 
-### 1. Get Code
-```sh
-git clone https://github.com/Catsup0059/LunarRegolithParticleAnalysis.git
-```
-### 2. Environment Preparation 
+Use Python 3.11. The desktop interface uses Tkinter and Tcl/Tk; PNG preview and opening the results folder use Windows file associations.
 
 ```sh
-# create conda env for LUPA
-conda create -n lupa python=3.12.7
+git clone https://github.com/Catsup0059/LUPA-Lunar-Regolith-Particle-Analyzer.git
+cd LUPA-Lunar-Regolith-Particle-Analyzer
+conda create -n lupa python=3.11 tk
 conda activate lupa
-# install pymeshlab
-pip install pymeshlab
+python -m pip install -r requirements.txt
 ```
 
-## Inplementations
+The verified environment is Windows 11, Python 3.11.13, NumPy 1.26.4, SciPy 1.11.4, Matplotlib 3.10.3, and PyMeshLab 2025.7.post1. Dependency version ranges are defined in [requirements.txt](requirements.txt).
 
-### 1. Prepare Input Data
-Place all particles STL files to be analyzed in the directory:
+## Usage
+
+The default [analysis.ini](analysis.ini) processes three synthetic meshes in [examples/stl](examples/stl): a sphere, an ellipsoid, and a rough particle. The sphere also contains a separate internal tetrahedron to demonstrate connected-surface extraction.
+
+### Desktop interface
+
 ```sh
-data/stl/original_stl
+python main.py --gui
 ```
-Each STL file should represent a single particle reconstructed from CT data.
 
-### 2. Configure Parameters
-The analysis parameters are defined in the configuration file analysis.ini.
-Users are encouraged to modify parameters in this file rather than editing the  source code directly. Key parameters typically include:
+Select **STL input folder** and **Output folder**, set **Face retention**, **Result tag**, **Workers**, and **Voxel size (mm)**, then select the metrics and click **Start analysis**. The interface displays progress, a result table, and a run log. **Preview particle** opens the selected particle image; **Open results** opens the exported results.
 
-• Output directory for saving analysis results
+Changes made in the interface apply to that run. The INI file stays unchanged, and the result JSON records the effective settings. Desktop runs export figures as PNG files.
 
-• Point cloud downsampling ratio used during preprocessing
+### Command-line interface
 
-• Other analysis-related settings
-
-### 3. Run the Main Program
-The entry point of the toolkit is `main.m`. Before running the program:
-
-• Set the absolute path of the project root directory in the script.
-
-• Configure the MATLAB parallel pool according to the available computational resources.
-
-### 4. Excute Analysis
-After the Configuration is completed, run:
 ```sh
-main
+python main.py --config analysis.ini
+python main.py --config analysis.ini --workers 2
 ```
-The program will automatically process all STL files in the input directory, perform preprocessing, and extract particle morphology and surface texture descriptors.
-All analysis results will be saved in:
+
+To execute the stages separately, run them in this order:
+
 ```sh
-data/result
+python main.py --config analysis.ini --stage preprocess
+python main.py --config analysis.ini --stage analyze
+python main.py --config analysis.ini --stage display
 ```
 
-## Result
- Representative results are provided to illustrate the capabilities of the toolkit. First, STL models reconstructed from particle scans are visualized as the input geometry for subsequent analysis. The effects of mesh simplification are demonstrated through different levels of STL downsampling, showing the trade-off between geometric detail and computational efficiency. In addition, spherical harmonic fitting with different harmonic orders is applied to the particle surfaces, illustrating how higher orders progressively capture finer geometric features.
+`preprocess` reads STL files and saves repaired and simplified meshes. `analyze` reads the saved meshes and computes the selected metrics. `display` reads the saved meshes and generates their views. For all command-line options, run `python main.py --help`.
 
-Beyond single-particle examples, the toolkit is applied to several hundred particles segmented from CT data. Using the developed algorithms, texture features and morphological descriptors are automatically extracted and statistically summarized, providing quantitative insights into particle surface characteristics and shape distributions across the dataset.
+## Input and configuration
 
-Furthermore, based on the extracted morphological features, a support vector machine (SVM) classifier is employed to categorize particles into genetic types. Considering the high morphological similarity between monomineral grains and lithic fragments, these two categories are merged into a single class, resulting in three effective classes: glass, agglutinates, and mineral/lithic particles. The classification results demonstrate clear separability in the multidimensional feature space, and the overall classification accuracy exceeds 94%. This outcome further validates the effectiveness of the proposed quantitative descriptors and highlights the capability of the toolkit to support data-driven particle classification and origin analysis.
- 
-  <p align="center">
-    <img src="result.png" alt="framework" width="510" height="500">
-  </p>
-</a>
+Each STL file represents one particle. Volume-based metrics use a closed triangular surface with consistently oriented faces. Connected-surface extraction retains the component with the largest surface area; hole filling and non-manifold reconstruction are outside this operation.
 
+Edit [analysis.ini](analysis.ini) to select directories, metrics, and algorithm parameters. Relative paths are resolved from the INI file's directory.
 
+| Section and setting | Default | Meaning |
+| --- | --- | --- |
+| `RepairStl.InputDir` | `examples/stl` | Input particle STL directory |
+| `ImportObject.ReshapeToCenter` | `1` | Center the retained mesh and record its original coordinate offset |
+| `FilterStl.Percent` | `0.5` | Target fraction of triangle faces retained after simplification |
+| `FilterStl.PercentDescription` | `05` | String tag used to pair repaired and simplified meshes; leading zeros are preserved |
+| `Analysis.Workers` | `1` | Number of worker processes; `--workers` overrides this setting |
+| `Analysis.Neighbors` | `10` | Nearest simplified-mesh vertices used to select candidate faces for roughness |
+| `Analysis.EquivalentDiameter`, `Wadell`, `PCA`, `ShapeVariance`, `Roughness` | `true` | Enable the corresponding metric groups |
+| `Analysis.Fractal`, `FilterFractal` | `false` | Enable fractal analysis of the repaired and simplified meshes |
+| `Fractal.VoxelSize` | `0.001` | Voxel size in millimetres; `auto` selects the size from the particle dimensions |
+| `Fractal.Radii` | `auto` | Generate 35 dilation radii; an explicit list uses comma-separated values in millimetres |
+| `Display.Shade` | `solid` | Mesh display mode: `solid`, `mesh` (wireframe), or `both` |
+| `Display.Export` | `png` | CLI figure destination: `png`, `screen`, or `both` |
 
+Geometric lengths use the STL coordinate unit, areas use its square, and volumes use its cube. For fractal analysis, supply STL coordinates and dilation parameters in millimetres. STL files contain no unit metadata.
 
-## Contributors
+NPZ meshes store `vertices`, zero-based `faces`, and `origin`; input coordinates are recovered as `vertices + origin`. Repaired and simplified meshes share a coordinate system. Analysis and display also read paired MATLAB MAT meshes containing these arrays, with one-based face indices converted on import; format details are in [MIGRATION.md](MIGRATION.md).
 
-For contributors to this toolkit, please refer to the contributors list on the right side of the repository page.
+## Results
 
+The default CLI configuration writes mesh data to `data/obj_data`, STL files to `data/stl`, result tables to `data/result`, and mesh images to `picture`. Desktop runs organize the selected output root into `stl`, `meshes`, `results`, and `images` directories.
 
+Each CSV row contains a particle name and 13 metrics. CSV files use UTF-8 with a byte-order mark. JSON files include the same measurements, software version, timestamp, enabled metric groups, and effective settings.
 
-## License
+| Field | Definition | Unit |
+| --- | --- | --- |
+| `d_v` | Equivalent-volume diameter of the repaired mesh | Length |
+| `SSA` | Repaired-mesh surface area divided by volume | Inverse length |
+| `Wadell` | Equal-volume sphere area divided by simplified-mesh surface area | Dimensionless |
+| `EI` | Intermediate/longest PCA-axis span, I/L | Dimensionless |
+| `FI` | Shortest/intermediate PCA-axis span, S/I | Dimensionless |
+| `AR` | Shortest/longest PCA-axis span, S/L | Dimensionless |
+| `shape_variance` | Sample variance of repaired-vertex distances from the current coordinate origin | Length squared |
+| `Ra` | Mean absolute distance from repaired vertices to simplified-surface candidate faces | Length |
+| `Rz` | Sample standard deviation of those distances, using `ddof=1` | Length |
+| `D_repair` | Fractal dimension estimated from the repaired mesh | Dimensionless |
+| `Rsq_repair` | R² of the repaired-mesh log–log dilation fit | Dimensionless |
+| `D_filter` | Fractal dimension estimated from the simplified mesh | Dimensionless |
+| `Rsq_filter` | R² of the simplified-mesh log–log dilation fit | Dimensionless |
 
-This project is licensed under the GNU Affero General Public License v3.0.
+PCA axis ratios use the repaired mesh. Roughness computes the exact point-to-triangle distance within faces attached to the selected nearest vertices. Fractal analysis approximates the surface with voxels near mesh vertices and fits `D = 3 - slope` to dilation volume against radius in log–log coordinates. Its outputs include the sampled radii, volumes, fit data, and a PNG fit plot.
 
-You may redistribute and modify this software under the terms of the
-AGPL-3.0 license as published by the Free Software Foundation.
+Disabled metrics occupy zero-valued fields in CSV and JSON; `enabled_metrics` in JSON identifies the computed groups. The desktop table displays `--` for disabled metrics.
 
-If you use this software in a network service, you must provide users
-access to the corresponding source code as required by AGPL-3.0.
+## Project structure
 
-See the LICENSE file for the full license text. [LICENSE.txt](https://github.com/Catsup0059/LunarRegolithParticleAnalysis/blob/main/license/LICENSE)
+```text
+main.py                 Application entry point
+analysis.ini            Input paths and analysis parameters
+requirements.txt        Python dependencies
+lupa/                   Mesh, metric, fractal, rendering, pipeline, CLI, and GUI modules
+examples/               Synthetic STL meshes and their generator
+tests/                  Mesh and pipeline tests
+license/                Project and dependency license texts
+MIGRATION.md            MATLAB-to-Python function mapping and data-format notes
+THIRD_PARTY_NOTICES.md   Dependency attribution and license inventory
+```
 
-## Aknowledgements
-This project incorporates functionality from the Spherical Harmonic Modeling and Analysis Toolkit(SPHARM-MAT-v1-0-0), developed by ShenLab, Center for Neuroimaging, Indiana University. We gratefully acknowledge the efforts of the original developers and maintainers of this package. Their work has provided an important foundation for the development of this project.
+## Tests
 
-The original source code and license of the package are preserved in this repository in accordance with the GNU Affero General Public License v3.0. We sincerely thank the authors for releasing their work as open-source software and supporting the advancement of the research community.
+```sh
+python -m unittest discover -s tests -v
+```
 
+The 12 tests cover ASCII and binary STL, connected-surface extraction, coordinate offsets, geometric and texture metrics, result export, MAT import, and consistency between single-process and multiprocess execution. Regenerate the synthetic examples with:
 
+```sh
+python examples/create_demo.py
+```
 
-<!-- links -->
-[your-project-path]:shaojintian/Best_README_template
+## Developers
+
+LUPA is developed by the following contributors:
+
+<table>
+  <tr>
+    <td align="center" width="160">
+      <a href="https://github.com/Catsup0059">
+        <img src="https://avatars.githubusercontent.com/u/189190712?s=120&amp;v=4" width="100" height="100" alt="Catsup0059 GitHub avatar"><br>
+        <strong>Catsup0059</strong>
+      </a>
+    </td>
+    <td align="center" width="160">
+      <a href="https://github.com/WangLingxin-hit">
+        <img src="https://avatars.githubusercontent.com/u/82747825?s=120&amp;v=4" width="100" height="100" alt="WangLingxin-hit GitHub avatar"><br>
+        <strong>WangLingxin-hit</strong>
+      </a>
+    </td>
+  </tr>
+</table>
+
+Contributors are also listed on the repository's [contributors page][contributors-url].
+
+## License and acknowledgements
+
+LUPA is licensed under **GNU Affero General Public License v3.0 or later (AGPL-3.0-or-later)**. The full license text is in [LICENSE.txt](LICENSE.txt).
+
+LUPA uses NumPy and SciPy for numerical operations, Matplotlib for figures, and PyMeshLab for mesh simplification. Their authors and license texts are listed in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+
+The earlier MATLAB workflow used SPHARM-MAT, developed by ShenLab at Indiana University, and point2trimesh by Daniel Frisch. This Python implementation performs STL handling and point-to-triangle distance calculations in the `lupa` modules. SPHARM-MAT and point2trimesh are historical references and are not bundled runtime dependencies.
+
 [contributors-shield]: https://img.shields.io/github/contributors/Catsup0059/LUPA-Lunar-Regolith-Particle-Analyzer.svg?style=flat-square
 [contributors-url]: https://github.com/Catsup0059/LUPA-Lunar-Regolith-Particle-Analyzer/graphs/contributors
-
 [forks-shield]: https://img.shields.io/github/forks/Catsup0059/LUPA-Lunar-Regolith-Particle-Analyzer.svg?style=flat-square
 [forks-url]: https://github.com/Catsup0059/LUPA-Lunar-Regolith-Particle-Analyzer/forks
-
 [stars-shield]: https://img.shields.io/github/stars/Catsup0059/LUPA-Lunar-Regolith-Particle-Analyzer.svg?style=flat-square
 [stars-url]: https://github.com/Catsup0059/LUPA-Lunar-Regolith-Particle-Analyzer/stargazers
-
 [issues-shield]: https://img.shields.io/github/issues/Catsup0059/LUPA-Lunar-Regolith-Particle-Analyzer.svg?style=flat-square
 [issues-url]: https://github.com/Catsup0059/LUPA-Lunar-Regolith-Particle-Analyzer/issues
-

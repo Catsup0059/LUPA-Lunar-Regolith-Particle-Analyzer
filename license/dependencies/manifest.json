@@ -1,0 +1,79 @@
+[
+  {
+    "package": "pymeshlab",
+    "version": "2025.7.post1",
+    "source_path": "pymeshlab-2025.7.post1.dist-info/licenses/LICENSE",
+    "copy": "license/dependencies/pymeshlab.txt",
+    "sha256": "230184f60bae2feaf244f10a8bac053c8ff33a183bcc365b4d8b876d2b7f4809"
+  },
+  {
+    "package": "numpy",
+    "version": "1.26.4",
+    "source_path": "numpy-1.26.4.dist-info/LICENSE.txt",
+    "copy": "license/dependencies/numpy.txt",
+    "sha256": "263223390c43a9d4a0841e0209265fd927a198f8e89c8eee809b7437d7e5e8c2"
+  },
+  {
+    "package": "numpy",
+    "version": "1.26.4",
+    "source_path": "numpy/core/include/numpy/random/LICENSE.txt",
+    "copy": "license/dependencies/numpy_random_c.txt",
+    "sha256": "fbc539f47d0cf83bc61378080fb873d5c14630126cacbfe754035c3926daa5ec"
+  },
+  {
+    "package": "numpy",
+    "version": "1.26.4",
+    "source_path": "numpy/ma/LICENSE",
+    "copy": "license/dependencies/numpy_ma.txt",
+    "sha256": "05f3b88351988ecfad10abe92c0c50e5875c6452d5009a0084cc291551ffcca6"
+  },
+  {
+    "package": "numpy",
+    "version": "1.26.4",
+    "source_path": "numpy/random/LICENSE.md",
+    "copy": "license/dependencies/numpy_random.txt",
+    "sha256": "103166b62b80443afb9eb3488e052ea06be0cff566b908f199e561fde49af19f"
+  },
+  {
+    "package": "scipy",
+    "version": "1.11.4",
+    "source_path": "scipy-1.11.4.dist-info/LICENSE.txt",
+    "copy": "license/dependencies/scipy.txt",
+    "sha256": "5517022426a56179540ee6eace15fd723ef8fdb83b2900fed2152dd2e2f972a2"
+  },
+  {
+    "package": "scipy",
+    "version": "1.11.4",
+    "source_path": "scipy/_lib/_uarray/LICENSE",
+    "copy": "license/dependencies/scipy_uarray.txt",
+    "sha256": "c80c39b5fce06ba4897e14e0b0a88b54458334d951eb1361402ffad2cfb863b4"
+  },
+  {
+    "package": "scipy",
+    "version": "1.11.4",
+    "source_path": "scipy/fft/_pocketfft/LICENSE.md",
+    "copy": "license/dependencies/scipy_pocketfft.txt",
+    "sha256": "c254b2b5fd30ae3c89d36ba061730563b9760fca04f1b746a1b2c3157da2c789"
+  },
+  {
+    "package": "matplotlib",
+    "version": "3.10.3",
+    "source_path": "matplotlib-3.10.3.dist-info/LICENSE",
+    "copy": "license/dependencies/matplotlib.txt",
+    "sha256": "5a1a81ea301728c8bba2933da832c0cd62229daf20893a024ab3d53244468dbc"
+  },
+  {
+    "package": "matplotlib",
+    "version": "3.10.3",
+    "source_path": "matplotlib/mpl-data/fonts/ttf/LICENSE_DEJAVU",
+    "copy": "license/dependencies/matplotlib_dejavu.txt",
+    "sha256": "d75938dec098f06f0ac3c00853065d94f020be1c3c62ef1dc2975ba15b4d9b0e"
+  },
+  {
+    "package": "matplotlib",
+    "version": "3.10.3",
+    "source_path": "matplotlib/mpl-data/fonts/ttf/LICENSE_STIX",
+    "copy": "license/dependencies/matplotlib_stix.txt",
+    "sha256": "bab3d31dfef07f483624f2f65f2711e76065b8e7273278b1c071ede1041c9959"
+  }
+]
